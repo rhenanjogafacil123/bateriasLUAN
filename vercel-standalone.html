@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luan Baterias</title>
+  <style>
+    html,body{margin:0;width:100%;height:100%;background:#0c0c0d;overflow:hidden}
+    #site{width:100%;height:100%;border:0;display:block;background:#0c0c0d}
+  </style>
+</head>
+<body>
+<iframe id="site" title="Luan Baterias"></iframe>
+<script>
+(async()=>{
+  const url='https://raw.githubusercontent.com/rhenanjogafacil123/bateriasLUAN/main/luan%20bat%20hero%20final.html';
+  let html=await fetch(url,{cache:'no-store'}).then(r=>r.text());
+  const inject=`<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet"><style>body,button,input,select,textarea,nav a,.hero-desc,.eyebrow,.subhead,.search-card,.cta-btn,.region,.tag{font-family:'Inter',sans-serif!important}h1,.logo-text .brand{font-family:'Inter Tight',sans-serif!important}h1{font-weight:800!important;letter-spacing:-.045em!important;line-height:.98!important}h1 .line2{font-weight:800!important}.hero-desc{line-height:1.6!important;max-width:560px}</style>`;
+  html=html.replace('</head>',inject+'</head>');
+  html=html.replace(/<div class="eyebrow">[\s\S]*?<\/div>/,'<div class="eyebrow">ENTREGA RÁPIDA <span class="dot">|</span> INSTALAÇÃO <span class="dot">|</span> GARANTIA</div>');
+  html=html.replace(/<h1>[\s\S]*?<\/h1>/,'<h1>Precisou de bateria?<span class="line2">A gente resolve.</span></h1>');
+  html=html.replace(/<div class="subhead">[\s\S]*?<span>[\s\S]*?<\/span>/,'<div class="subhead"><span>NA LOJA OU ONDE VOCÊ ESTIVER.</span>');
+  html=html.replace(/<p class="hero-desc">[\s\S]*?<\/p>/,'<p class="hero-desc">Baterias de confiança, instalação profissional e garantia para manter você em movimento.</p>');
+  document.getElementById('site').srcdoc=html;
+})().catch(err=>{document.body.innerHTML='<pre style="color:white;padding:20px">'+err+'</pre>'})
+</script>
+</body>
+</html>
