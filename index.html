@@ -38,23 +38,52 @@
 
         h1 {
           font-weight: 800 !important;
-          letter-spacing: -0.045em !important;
-          line-height: 0.98 !important;
+          letter-spacing: -0.025em !important;
+          line-height: 0.99 !important;
+          max-width: 620px;
         }
 
         h1 .line2 {
           font-weight: 800 !important;
+          margin-top: 4px;
+          background: none !important;
+          color: #ffd21a !important;
+          -webkit-text-fill-color: #ffd21a !important;
+        }
+
+        .eyebrow {
+          letter-spacing: 1.8px !important;
+        }
+
+        .subhead span {
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 700 !important;
+          letter-spacing: 2.6px !important;
         }
 
         .hero-desc {
-          line-height: 1.6 !important;
-          max-width: 560px;
+          line-height: 1.55 !important;
+          max-width: 565px;
+          color: #e6e6e8 !important;
         }
+
+        .search-head h3 {
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 700 !important;
+        }
+
+        .search-submit {
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 800 !important;
+          letter-spacing: -0.01em !important;
+        }
+
+        .secure-note { display: none !important; }
       `;
       doc.head.appendChild(style);
 
       const eyebrow = doc.querySelector('.eyebrow');
-      if (eyebrow) eyebrow.innerHTML = 'ENTREGA RÁPIDA <span class="dot">|</span> INSTALAÇÃO <span class="dot">|</span> GARANTIA';
+      if (eyebrow) eyebrow.innerHTML = 'ATENDIMENTO NA LOJA <span class="dot">|</span> ENTREGA RÁPIDA <span class="dot">|</span> INSTALAÇÃO';
 
       const title = doc.querySelector('h1');
       if (title) title.innerHTML = 'Precisou de bateria?<span class="line2">A gente resolve.</span>';
@@ -64,8 +93,19 @@
 
       const desc = doc.querySelector('.hero-desc');
       if (desc) desc.textContent = 'Baterias de confiança, instalação profissional e garantia para manter você em movimento.';
+
+      const searchTitle = doc.querySelector('.search-head h3');
+      if (searchTitle) searchTitle.textContent = 'Encontre a bateria certa para o seu veículo';
+
+      const searchText = doc.querySelector('.search-head p');
+      if (searchText) searchText.textContent = 'Selecione seu veículo e veja as opções compatíveis.';
+
+      const searchButton = doc.querySelector('.search-submit');
+      if (searchButton) {
+        const textNode = [...searchButton.childNodes].find(node => node.nodeType === 3 && node.textContent.trim());
+        if (textNode) textNode.textContent = ' ENCONTRAR MINHA BATERIA ';
+      }
     });
   </script>
-  <!-- trigger: vercel production deploy -->
 </body>
 </html>
