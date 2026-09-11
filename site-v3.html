@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Luan Baterias</title>
   <style>
-    html,body{margin:0;width:100%;height:100%;background:#0c0c0d;overflow:hidden}
-    #page{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#0c0c0d}
+    html,body{margin:0;width:100%;min-height:100%;background:#0c0c0d;overflow-x:hidden}
+    #page{width:100%;height:100vh;min-height:840px;border:0;display:block;background:#0c0c0d}
   </style>
 </head>
 <body>
@@ -27,22 +27,8 @@
       const style = doc.createElement('style');
       style.textContent = `
         .proof .head{margin-bottom:30px}
-        .proof-grid{
-          display:grid!important;
-          grid-template-columns:repeat(3,minmax(0,1fr))!important;
-          gap:14px!important;
-        }
-        .testimonial-card{
-          position:relative;
-          min-height:250px;
-          padding:24px;
-          border:1px solid rgba(255,255,255,.09);
-          border-radius:18px;
-          background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.015));
-          display:flex;
-          flex-direction:column;
-          transition:transform .2s ease,border-color .2s ease;
-        }
+        .proof-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+        .testimonial-card{position:relative;min-height:250px;padding:24px;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.015));display:flex;flex-direction:column;transition:transform .2s ease,border-color .2s ease}
         .testimonial-card:hover{transform:translateY(-3px);border-color:rgba(255,210,26,.24)}
         .testimonial-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
         .testimonial-stars{color:#ffd21a;letter-spacing:2px;font-size:14px}
@@ -54,42 +40,20 @@
         .testimonial-meta{margin-top:2px;font-size:10.5px;color:#85868c}
         .demo-note{display:flex;align-items:center;gap:8px;margin-top:18px;color:#777981;font-size:10.5px;line-height:1.5}
         .demo-dot{width:6px;height:6px;border-radius:50%;background:#ffd21a;flex:0 0 auto}
-
         .map{padding:0!important;overflow:hidden!important;position:relative!important}
         .map:before,.map:after{display:none!important}
         .map iframe{width:100%;height:100%;min-height:360px;border:0;display:block;filter:grayscale(.38) contrast(1.05) brightness(.8)}
-        .map-route{
-          position:absolute;left:18px;bottom:18px;z-index:3;
-          min-height:42px;padding:0 15px;border-radius:9px;
-          display:inline-flex;align-items:center;justify-content:center;
-          background:#ffd21a;color:#111214;text-decoration:none;
-          font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.28)
-        }
+        .map-route{position:absolute;left:18px;bottom:18px;z-index:3;min-height:42px;padding:0 15px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;background:#ffd21a;color:#111214;text-decoration:none;font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.28)}
         .contact a.inline-link{color:#f5f5f3;text-decoration:none;font-weight:700}
         .contact a.inline-link:hover{color:#ffd21a}
-
-        .wa-float{
-          position:fixed;right:22px;bottom:22px;z-index:9999;
-          min-height:52px;padding:0 18px;border-radius:999px;
-          display:flex;align-items:center;gap:9px;
-          background:#ffd21a;color:#111214;text-decoration:none;
-          font-size:12px;font-weight:900;letter-spacing:-.01em;
-          border:1px solid rgba(0,0,0,.18);
-          box-shadow:0 16px 40px rgba(0,0,0,.34)
-        }
+        .wa-float{position:fixed;right:22px;bottom:22px;z-index:9999;min-height:52px;padding:0 18px;border-radius:999px;display:flex;align-items:center;gap:9px;background:#ffd21a;color:#111214;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:-.01em;border:1px solid rgba(0,0,0,.18);box-shadow:0 16px 40px rgba(0,0,0,.34)}
         .wa-float:hover{transform:translateY(-2px)}
         .wa-float span{font-size:18px;line-height:1}
-
         @media(max-width:980px){.proof-grid{grid-template-columns:1fr!important}}
-        @media(max-width:640px){
-          .wa-float{right:14px;bottom:14px;min-height:48px;padding:0 14px}
-          .map iframe{min-height:320px}
-          .map-route{left:14px;bottom:14px}
-        }
+        @media(max-width:640px){.wa-float{right:14px;bottom:14px;min-height:48px;padding:0 14px}.map iframe{min-height:320px}.map-route{left:14px;bottom:14px}}
       `;
       doc.head.appendChild(style);
 
-      // Mantém os depoimentos de demonstração.
       const proof = doc.querySelector('#avaliacoes');
       if (proof) {
         proof.innerHTML = `
@@ -120,7 +84,6 @@
           </div>`;
       }
 
-      // CTAs dos produtos: abre o WhatsApp já com o produto escolhido.
       doc.querySelectorAll('.product-card').forEach(card => {
         const name = card.querySelector('h3')?.textContent.trim() || 'uma bateria';
         const primary = card.querySelector('.actions .primary');
@@ -132,7 +95,6 @@
         }
       });
 
-      // Bloco de contato com os dados reais já confirmados.
       const contact = doc.querySelector('#contato .contact');
       if (contact) {
         contact.innerHTML = `
@@ -146,7 +108,6 @@
           <a class="btn primary" href="${waUrl('Olá! Vim pelo site da Luan Baterias e preciso de ajuda para encontrar a bateria certa para meu veículo.')}" target="_blank" rel="noopener">Falar no WhatsApp</a>`;
       }
 
-      // Mapa real + rota.
       const map = doc.querySelector('#contato .map');
       if (map) {
         const embed = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&output=embed`;
@@ -154,7 +115,6 @@
         map.innerHTML = `<iframe src="${embed}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa da Luan Baterias"></iframe><a class="map-route" href="${route}" target="_blank" rel="noopener">Abrir rota</a>`;
       }
 
-      // Corrige textos de localização no rodapé.
       doc.querySelectorAll('.footer a').forEach(link => {
         if (link.textContent.toLowerCase().includes('cabr')) {
           link.textContent = 'Rua do Império, 166 - Santa Cruz - RJ';
@@ -164,7 +124,6 @@
         }
       });
 
-      // CTA final vai direto para o WhatsApp.
       const finalCta = doc.querySelector('.cta .primary');
       if (finalCta) {
         finalCta.textContent = 'Falar com a Luan Baterias';
@@ -173,7 +132,6 @@
         finalCta.rel = 'noopener';
       }
 
-      // Botão flutuante de WhatsApp.
       if (!doc.querySelector('.wa-float')) {
         const float = doc.createElement('a');
         float.className = 'wa-float';
@@ -185,7 +143,6 @@
         doc.body.appendChild(float);
       }
 
-      // Hero: conecta botão de WhatsApp e o seletor do veículo ao atendimento.
       const heroFrame = doc.getElementById('site');
       const configureHero = () => {
         const heroDoc = heroFrame?.contentDocument || heroFrame?.contentWindow?.document;
@@ -215,7 +172,6 @@
               if (!value || /selecione|escolha/i.test(value)) return null;
               return `${labels[index] || `Campo ${index + 1}`}: ${value}`;
             }).filter(Boolean);
-
             const vehicle = parts.length ? parts.join(' | ') : 'Ainda não preenchi todos os dados do veículo';
             const message = `Olá! Vim pelo site da Luan Baterias e quero encontrar a bateria certa. ${vehicle}.`;
             window.open(waUrl(message), '_blank');
@@ -226,6 +182,20 @@
       if (heroFrame) {
         heroFrame.addEventListener('load', configureHero);
         try { configureHero(); } catch (_) {}
+      }
+
+      // Faz o wrapper ocupar a altura real da página interna. Isso elimina a sensação de página travada
+      // e mantém tudo no mesmo projeto/URL de produção.
+      const resizePage = () => {
+        const height = Math.max(doc.body?.scrollHeight || 0, doc.documentElement?.scrollHeight || 0, 840);
+        page.style.height = `${height}px`;
+      };
+      resizePage();
+      setTimeout(resizePage, 300);
+      setTimeout(resizePage, 1200);
+      if ('ResizeObserver' in window) {
+        const observer = new ResizeObserver(resizePage);
+        observer.observe(doc.documentElement);
       }
     });
   </script>
