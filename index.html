@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luan Baterias</title>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; background: #0c0c0d; overflow: hidden; }
+    #site { width: 100%; height: 100%; border: 0; display: block; background: #0c0c0d; }
+  </style>
+</head>
+<body>
+  <iframe id="site" src="./luan%20bat%20hero%20final.html" title="Luan Baterias"></iframe>
+
+  <script>
+    const frame = document.getElementById('site');
+
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc) return;
+
+      const font = doc.createElement('link');
+      font.rel = 'stylesheet';
+      font.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800;900&display=swap';
+      doc.head.appendChild(font);
+
+      const style = doc.createElement('style');
+      style.textContent = `
+        body, button, input, select, textarea, nav a,
+        .hero-desc, .eyebrow, .subhead, .search-card,
+        .cta-btn, .region, .tag {
+          font-family: 'Inter', sans-serif !important;
+        }
+
+        h1, .logo-text .brand {
+          font-family: 'Inter Tight', sans-serif !important;
+        }
+
+        h1 {
+          font-weight: 800 !important;
+          letter-spacing: -0.045em !important;
+          line-height: 0.98 !important;
+        }
+
+        h1 .line2 {
+          font-weight: 800 !important;
+        }
+
+        .hero-desc {
+          line-height: 1.6 !important;
+          max-width: 560px;
+        }
+      `;
+      doc.head.appendChild(style);
+
+      const eyebrow = doc.querySelector('.eyebrow');
+      if (eyebrow) eyebrow.innerHTML = 'ENTREGA RÁPIDA <span class="dot">|</span> INSTALAÇÃO <span class="dot">|</span> GARANTIA';
+
+      const title = doc.querySelector('h1');
+      if (title) title.innerHTML = 'Precisou de bateria?<span class="line2">A gente resolve.</span>';
+
+      const subhead = doc.querySelector('.subhead span');
+      if (subhead) subhead.textContent = 'NA LOJA OU ONDE VOCÊ ESTIVER.';
+
+      const desc = doc.querySelector('.hero-desc');
+      if (desc) desc.textContent = 'Baterias de confiança, instalação profissional e garantia para manter você em movimento.';
+    });
+  </script>
+</body>
+</html>
