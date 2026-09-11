@@ -4,823 +4,197 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Luan Baterias</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --black:#0c0c0d;
-      --black-2:#111214;
-      --black-3:#17181b;
-      --card:#141518;
-      --card-2:#191a1e;
-      --yellow:#ffd21a;
-      --yellow-2:#ffc700;
-      --text:#f5f5f3;
-      --muted:#a7a8ad;
-      --line:rgba(255,255,255,.08);
-      --line-strong:rgba(255,255,255,.13);
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth;background:var(--black)}
-    body{
-      margin:0;
-      width:100%;
-      background:var(--black);
-      color:var(--text);
-      font-family:'Inter',sans-serif;
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-    }
-
-    #site{
-      width:100%;
-      height:100vh;
-      min-height:840px;
-      border:0;
-      display:block;
-      background:var(--black);
-    }
-
-    .section{
-      padding:96px 48px;
-      border-top:1px solid var(--line);
-    }
-
-    .container{
-      width:min(1180px,100%);
-      margin:0 auto;
-    }
-
-    .section-kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      color:var(--yellow);
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      margin-bottom:18px;
-    }
-
-    .section-kicker::before{
-      content:"";
-      width:28px;
-      height:2px;
-      border-radius:99px;
-      background:var(--yellow);
-    }
-
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:32px;
-      margin-bottom:34px;
-    }
-
-    .section-head h2{
-      margin:0;
-      max-width:720px;
-      font-family:'Inter Tight',sans-serif;
-      font-size:clamp(36px,4vw,58px);
-      line-height:.98;
-      letter-spacing:-.04em;
-      font-weight:800;
-    }
-
-    .section-head p{
-      margin:0;
-      max-width:430px;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.65;
-    }
-
-    .catalog-section{
-      background:
-        radial-gradient(circle at 85% 10%,rgba(255,210,26,.07),transparent 28%),
-        linear-gradient(180deg,#0d0e10 0%,#101114 100%);
-    }
-
-    .filter-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:28px;
-    }
-
-    .filter-btn{
-      appearance:none;
-      border:1px solid var(--line-strong);
-      background:rgba(255,255,255,.025);
-      color:#c9c9cd;
-      font-family:'Inter',sans-serif;
-      font-size:13px;
-      font-weight:700;
-      padding:11px 16px;
-      border-radius:999px;
-      cursor:pointer;
-      transition:.2s ease;
-    }
-
-    .filter-btn:hover{border-color:rgba(255,210,26,.45);color:#fff}
-    .filter-btn.active{background:var(--yellow);border-color:var(--yellow);color:#111214}
-
-    .products-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
-    }
-
-    .product-card{
-      background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.018));
-      border:1px solid var(--line);
-      border-radius:18px;
-      overflow:hidden;
-      transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-    }
-
-    .product-card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(255,210,26,.26);
-      box-shadow:0 18px 50px rgba(0,0,0,.22);
-    }
-
-    .product-visual{
-      position:relative;
-      min-height:220px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 50% 45%,rgba(255,210,26,.12),transparent 42%),
-        linear-gradient(180deg,#17181b 0%,#111214 100%);
-      border-bottom:1px solid var(--line);
-    }
-
-    .product-visual::after{
-      content:"";
-      position:absolute;
-      inset:auto 12% 26px;
-      height:28px;
-      background:rgba(0,0,0,.45);
-      filter:blur(18px);
-      border-radius:50%;
-    }
-
-    .battery{
-      position:relative;
-      z-index:2;
-      width:178px;
-      height:112px;
-      border-radius:12px 12px 16px 16px;
-      background:linear-gradient(145deg,#282a2f 0%,#121316 60%,#0c0d0f 100%);
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 18px 40px rgba(0,0,0,.35);
-      transform:perspective(700px) rotateX(2deg) rotateY(-7deg);
-    }
-
-    .battery::before,
-    .battery::after{
-      content:"";
-      position:absolute;
-      top:-14px;
-      width:28px;
-      height:16px;
-      border-radius:6px 6px 2px 2px;
-      background:linear-gradient(180deg,#aeb1b6,#666a70);
-      border:1px solid rgba(255,255,255,.2);
-    }
-
-    .battery::before{left:25px}
-    .battery::after{right:25px}
-
-    .battery-top{
-      position:absolute;
-      left:10px;
-      right:10px;
-      top:10px;
-      height:15px;
-      border-radius:5px;
-      background:#0b0c0e;
-      border:1px solid rgba(255,255,255,.06);
-    }
-
-    .battery-label{
-      position:absolute;
-      left:15px;
-      right:15px;
-      top:38px;
-      bottom:16px;
-      border-radius:8px;
-      background:linear-gradient(110deg,#ffd21a,#ffbd00);
-      color:#111214;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      justify-content:center;
-      padding:0 16px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
-    }
-
-    .battery-label small{
-      font-size:9px;
-      font-weight:800;
-      letter-spacing:1.5px;
-      opacity:.7;
-    }
-
-    .battery-label strong{
-      margin-top:2px;
-      font-family:'Inter Tight',sans-serif;
-      font-size:25px;
-      letter-spacing:-.04em;
-      line-height:1;
-    }
-
-    .product-badge{
-      position:absolute;
-      top:16px;
-      left:16px;
-      z-index:3;
-      padding:7px 10px;
-      border-radius:999px;
-      background:rgba(12,12,13,.78);
-      border:1px solid var(--line-strong);
-      backdrop-filter:blur(8px);
-      color:#e5e5e7;
-      font-size:10px;
-      font-weight:800;
-      letter-spacing:1.2px;
-      text-transform:uppercase;
-    }
-
-    .product-body{padding:20px}
-
-    .product-body h3{
-      margin:0 0 6px;
-      font-family:'Inter Tight',sans-serif;
-      font-size:22px;
-      letter-spacing:-.025em;
-      font-weight:800;
-    }
-
-    .product-sub{
-      margin:0 0 15px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-
-    .specs{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-bottom:18px;
-    }
-
-    .spec{
-      padding:7px 9px;
-      border-radius:7px;
-      background:rgba(255,255,255,.035);
-      border:1px solid var(--line);
-      color:#c7c8cc;
-      font-size:11px;
-      font-weight:600;
-    }
-
-    .availability{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      color:#d5d5d8;
-      font-size:12px;
-      margin-bottom:16px;
-    }
-
-    .availability::before{
-      content:"";
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:var(--yellow);
-      box-shadow:0 0 0 4px rgba(255,210,26,.09);
-    }
-
-    .product-actions{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:9px;
-    }
-
-    .btn-primary,
-    .btn-secondary{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:44px;
-      border-radius:9px;
-      font-family:'Inter',sans-serif;
-      font-size:12.5px;
-      font-weight:800;
-      text-decoration:none;
-      cursor:pointer;
-    }
-
-    .btn-primary{
-      border:1px solid var(--yellow);
-      background:var(--yellow);
-      color:#111214;
-      padding:0 14px;
-    }
-
-    .btn-secondary{
-      width:44px;
-      border:1px solid var(--line-strong);
-      background:rgba(255,255,255,.025);
-      color:#fff;
-    }
-
-    .catalog-note{
-      margin:18px 0 0;
-      color:#777981;
-      font-size:11.5px;
-      line-height:1.5;
-    }
-
-    .assist-wrap{margin-top:42px}
-
-    .assist-card{
-      position:relative;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:28px;
-      padding:30px 32px;
-      border-radius:18px;
-      border:1px solid rgba(255,210,26,.22);
-      background:
-        linear-gradient(100deg,rgba(255,210,26,.12),rgba(255,210,26,.025) 42%,rgba(255,255,255,.02)),
-        #131417;
-    }
-
-    .assist-card::after{
-      content:"";
-      position:absolute;
-      width:260px;
-      height:260px;
-      right:-100px;
-      top:-140px;
-      border-radius:50%;
-      background:rgba(255,210,26,.08);
-      filter:blur(6px);
-    }
-
-    .assist-copy{position:relative;z-index:2}
-    .assist-copy small{
-      color:var(--yellow);
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:1.7px;
-      text-transform:uppercase;
-    }
-
-    .assist-copy h3{
-      margin:7px 0 6px;
-      font-family:'Inter Tight',sans-serif;
-      font-size:28px;
-      letter-spacing:-.03em;
-    }
-
-    .assist-copy p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
-
-    .assist-btn{
-      position:relative;
-      z-index:2;
-      flex-shrink:0;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:48px;
-      padding:0 19px;
-      border-radius:10px;
-      background:var(--yellow);
-      color:#111214;
-      text-decoration:none;
-      font-size:13px;
-      font-weight:800;
-    }
-
-    .benefits-section{background:#0c0d0f}
-
-    .benefits-grid{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:12px;
-      margin-top:34px;
-    }
-
-    .benefit{
-      min-height:190px;
-      padding:22px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));
-    }
-
-    .benefit-icon{
-      width:42px;
-      height:42px;
-      border-radius:11px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-bottom:24px;
-      background:rgba(255,210,26,.09);
-      border:1px solid rgba(255,210,26,.14);
-      color:var(--yellow);
-    }
-
-    .benefit h3{
-      margin:0 0 7px;
-      font-family:'Inter Tight',sans-serif;
-      font-size:19px;
-      font-weight:800;
-      letter-spacing:-.02em;
-    }
-
-    .benefit p{
-      margin:0;
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.6;
-    }
-
-    .final-cta{
-      padding:76px 48px 88px;
-      text-align:center;
-      border-top:1px solid var(--line);
-      background:
-        radial-gradient(circle at 50% 0%,rgba(255,210,26,.08),transparent 36%),
-        #101114;
-    }
-
-    .final-cta h2{
-      margin:0 auto 12px;
-      max-width:700px;
-      font-family:'Inter Tight',sans-serif;
-      font-size:clamp(34px,4vw,52px);
-      line-height:1;
-      letter-spacing:-.04em;
-      font-weight:800;
-    }
-
-    .final-cta p{
-      max-width:580px;
-      margin:0 auto 24px;
-      color:var(--muted);
-      line-height:1.65;
-      font-size:14px;
-    }
-
-    .final-cta a{
-      display:inline-flex;
-      min-height:50px;
-      align-items:center;
-      justify-content:center;
-      padding:0 20px;
-      border-radius:10px;
-      background:var(--yellow);
-      color:#111214;
-      text-decoration:none;
-      font-size:13px;
-      font-weight:800;
-    }
-
-    .product-card[hidden]{display:none!important}
-
-    @media(max-width:980px){
-      .section{padding:74px 28px}
-      .section-head{align-items:flex-start;flex-direction:column}
-      .products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .benefits-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-
-    @media(max-width:640px){
-      #site{height:1100px;min-height:0}
-      .section{padding:62px 18px}
-      .section-head{margin-bottom:26px}
-      .section-head h2{font-size:38px}
-      .products-grid{grid-template-columns:1fr}
-      .product-visual{min-height:205px}
-      .assist-card{align-items:flex-start;flex-direction:column;padding:25px}
-      .assist-btn{width:100%}
-      .benefits-grid{grid-template-columns:1fr}
-      .benefit{min-height:auto}
-      .final-cta{padding:62px 18px 72px}
-    }
+    html,body{margin:0;width:100%;min-height:100%;background:#0c0c0d;overflow-x:hidden}
+    #page{width:100%;height:100vh;min-height:840px;border:0;display:block;background:#0c0c0d}
   </style>
 </head>
 <body>
-  <iframe id="site" src="./luan%20bat%20hero%20final.html" title="Luan Baterias" scrolling="no"></iframe>
-
-  <main>
-    <section class="section catalog-section" id="catalogo">
-      <div class="container">
-        <div class="section-kicker">Catálogo</div>
-        <div class="section-head">
-          <h2>Baterias para cada tipo de veículo.</h2>
-          <p>Escolha pela categoria ou use o seletor acima para encontrar uma opção compatível com o seu veículo sem complicação.</p>
-        </div>
-
-        <div class="filter-row" aria-label="Filtrar baterias por categoria">
-          <button class="filter-btn active" type="button" data-filter="todos">Todos</button>
-          <button class="filter-btn" type="button" data-filter="carros">Carros</button>
-          <button class="filter-btn" type="button" data-filter="motos">Motos</button>
-          <button class="filter-btn" type="button" data-filter="startstop">Start-Stop</button>
-          <button class="filter-btn" type="button" data-filter="utilitarios">Utilitários</button>
-        </div>
-
-        <div class="products-grid">
-          <article class="product-card" data-category="carros">
-            <div class="product-visual">
-              <span class="product-badge">Automotiva</span>
-              <div class="battery"><div class="battery-top"></div><div class="battery-label"><small>12 VOLTS</small><strong>45Ah</strong></div></div>
-            </div>
-            <div class="product-body">
-              <h3>Bateria Automotiva 45Ah</h3>
-              <p class="product-sub">Opção compacta para veículos leves e uso urbano.</p>
-              <div class="specs"><span class="spec">12V</span><span class="spec">45Ah</span><span class="spec">Instalação</span></div>
-              <div class="availability">Consulte disponibilidade e compatibilidade</div>
-              <div class="product-actions"><a class="btn-primary" href="#ajuda">Consultar opções</a><a class="btn-secondary" href="#site" aria-label="Voltar ao seletor de veículo">↗</a></div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="carros">
-            <div class="product-visual">
-              <span class="product-badge">Automotiva</span>
-              <div class="battery"><div class="battery-top"></div><div class="battery-label"><small>12 VOLTS</small><strong>60Ah</strong></div></div>
-            </div>
-            <div class="product-body">
-              <h3>Bateria Automotiva 60Ah</h3>
-              <p class="product-sub">Equilíbrio entre desempenho, autonomia e uso diário.</p>
-              <div class="specs"><span class="spec">12V</span><span class="spec">60Ah</span><span class="spec">Garantia</span></div>
-              <div class="availability">Consulte disponibilidade e compatibilidade</div>
-              <div class="product-actions"><a class="btn-primary" href="#ajuda">Consultar opções</a><a class="btn-secondary" href="#site" aria-label="Voltar ao seletor de veículo">↗</a></div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="carros utilitarios">
-            <div class="product-visual">
-              <span class="product-badge">Alta capacidade</span>
-              <div class="battery"><div class="battery-top"></div><div class="battery-label"><small>12 VOLTS</small><strong>70Ah</strong></div></div>
-            </div>
-            <div class="product-body">
-              <h3>Bateria Automotiva 70Ah</h3>
-              <p class="product-sub">Para veículos que exigem uma reserva maior de energia.</p>
-              <div class="specs"><span class="spec">12V</span><span class="spec">70Ah</span><span class="spec">Instalação</span></div>
-              <div class="availability">Consulte disponibilidade e compatibilidade</div>
-              <div class="product-actions"><a class="btn-primary" href="#ajuda">Consultar opções</a><a class="btn-secondary" href="#site" aria-label="Voltar ao seletor de veículo">↗</a></div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="startstop carros">
-            <div class="product-visual">
-              <span class="product-badge">Start-Stop</span>
-              <div class="battery"><div class="battery-top"></div><div class="battery-label"><small>TECNOLOGIA AGM</small><strong>70Ah</strong></div></div>
-            </div>
-            <div class="product-body">
-              <h3>Bateria Start-Stop AGM</h3>
-              <p class="product-sub">Tecnologia indicada para sistemas com ciclos frequentes de partida.</p>
-              <div class="specs"><span class="spec">AGM</span><span class="spec">70Ah</span><span class="spec">Start-Stop</span></div>
-              <div class="availability">Consulte disponibilidade e compatibilidade</div>
-              <div class="product-actions"><a class="btn-primary" href="#ajuda">Consultar opções</a><a class="btn-secondary" href="#site" aria-label="Voltar ao seletor de veículo">↗</a></div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="motos">
-            <div class="product-visual">
-              <span class="product-badge">Moto</span>
-              <div class="battery"><div class="battery-top"></div><div class="battery-label"><small>12 VOLTS</small><strong>7Ah</strong></div></div>
-            </div>
-            <div class="product-body">
-              <h3>Bateria para Moto 7Ah</h3>
-              <p class="product-sub">Formato compacto para motocicletas de diferentes cilindradas.</p>
-              <div class="specs"><span class="spec">12V</span><span class="spec">7Ah</span><span class="spec">Moto</span></div>
-              <div class="availability">Consulte disponibilidade e compatibilidade</div>
-              <div class="product-actions"><a class="btn-primary" href="#ajuda">Consultar opções</a><a class="btn-secondary" href="#site" aria-label="Voltar ao seletor de veículo">↗</a></div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="utilitarios">
-            <div class="product-visual">
-              <span class="product-badge">Utilitário</span>
-              <div class="battery"><div class="battery-top"></div><div class="battery-label"><small>ALTA CAPACIDADE</small><strong>90Ah</strong></div></div>
-            </div>
-            <div class="product-body">
-              <h3>Bateria Utilitário 90Ah</h3>
-              <p class="product-sub">Mais capacidade para utilitários e aplicações de maior demanda.</p>
-              <div class="specs"><span class="spec">12V</span><span class="spec">90Ah</span><span class="spec">Utilitário</span></div>
-              <div class="availability">Consulte disponibilidade e compatibilidade</div>
-              <div class="product-actions"><a class="btn-primary" href="#ajuda">Consultar opções</a><a class="btn-secondary" href="#site" aria-label="Voltar ao seletor de veículo">↗</a></div>
-            </div>
-          </article>
-        </div>
-
-        <p class="catalog-note">Modelos, amperagens e disponibilidade podem variar conforme o veículo e o estoque. A confirmação é feita no atendimento.</p>
-
-        <div class="assist-wrap" id="ajuda">
-          <div class="assist-card">
-            <div class="assist-copy">
-              <small>Escolha sem erro</small>
-              <h3>Não sabe qual bateria escolher?</h3>
-              <p>Informe o seu veículo e a gente ajuda a encontrar uma opção compatível para você.</p>
-            </div>
-            <a class="assist-btn" href="#site">Encontrar minha bateria</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section benefits-section" id="servicos">
-      <div class="container">
-        <div class="section-kicker">Atendimento completo</div>
-        <div class="section-head">
-          <h2>Do diagnóstico à instalação.</h2>
-          <p>Você escolhe como quer ser atendido: na loja ou na sua localização, com suporte para encontrar a bateria certa.</p>
-        </div>
-
-        <div class="benefits-grid">
-          <article class="benefit">
-            <div class="benefit-icon">⌂</div>
-            <h3>Atendimento na loja</h3>
-            <p>Prefere vir até a gente? Atendimento presencial para avaliar sua necessidade e escolher com segurança.</p>
-          </article>
-          <article class="benefit">
-            <div class="benefit-icon">→</div>
-            <h3>Entrega rápida</h3>
-            <p>Quando precisar de praticidade, a bateria pode ir até a sua localização.</p>
-          </article>
-          <article class="benefit">
-            <div class="benefit-icon">⚙</div>
-            <h3>Instalação</h3>
-            <p>Atendimento com instalação para você resolver tudo no mesmo lugar e voltar a rodar.</p>
-          </article>
-          <article class="benefit">
-            <div class="benefit-icon">✓</div>
-            <h3>Garantia</h3>
-            <p>Orientação clara sobre a garantia e suporte após a compra para você seguir com mais tranquilidade.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="final-cta">
-      <h2>Precisou de bateria? A gente resolve.</h2>
-      <p>Encontre a opção certa para o seu veículo e escolha entre atendimento na loja ou na sua localização.</p>
-      <a href="#site">Encontrar minha bateria</a>
-    </section>
-  </main>
-
+  <iframe id="page" src="./site-v2.html" title="Luan Baterias"></iframe>
   <script>
-    const frame = document.getElementById('site');
+    const page = document.getElementById('page');
+    const WHATSAPP_NUMBER = '5521977449687';
+    const PHONE_NUMBER = '+552133052797';
+    const ADDRESS = 'Rua do Império, 166 - Santa Cruz - RJ';
+    const MAP_QUERY = 'Rua do Império, 166, Santa Cruz, Rio de Janeiro, RJ';
 
-    frame.addEventListener('load', () => {
-      const doc = frame.contentDocument || frame.contentWindow.document;
+    const waUrl = (message) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    page.addEventListener('load', () => {
+      const doc = page.contentDocument || page.contentWindow.document;
       if (!doc) return;
-
-      const font = doc.createElement('link');
-      font.rel = 'stylesheet';
-      font.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800;900&display=swap';
-      doc.head.appendChild(font);
 
       const style = doc.createElement('style');
       style.textContent = `
-        body, button, input, select, textarea, nav a,
-        .hero-desc, .eyebrow, .subhead, .search-card,
-        .cta-btn, .region, .tag {
-          font-family: 'Inter', sans-serif !important;
-        }
-
-        h1, .logo-text .brand {
-          font-family: 'Inter Tight', sans-serif !important;
-        }
-
-        h1 {
-          font-weight: 800 !important;
-          letter-spacing: -0.025em !important;
-          line-height: 1.08 !important;
-          max-width: 620px;
-          overflow: visible !important;
-          padding-bottom: 0.08em !important;
-        }
-
-        h1 .line2 {
-          display: block !important;
-          font-weight: 800 !important;
-          line-height: 1.14 !important;
-          margin-top: 2px !important;
-          padding-top: 0.02em !important;
-          padding-bottom: 0.16em !important;
-          min-height: 1.24em !important;
-          background: none !important;
-          color: #ffd21a !important;
-          -webkit-text-fill-color: #ffd21a !important;
-          overflow: visible !important;
-        }
-
-        .eyebrow { letter-spacing: 1.8px !important; }
-        .subhead { margin-top: 2px !important; }
-
-        .subhead span {
-          font-family: 'Inter', sans-serif !important;
-          font-weight: 700 !important;
-          letter-spacing: 2.6px !important;
-        }
-
-        .hero-desc {
-          line-height: 1.55 !important;
-          max-width: 565px;
-          color: #e6e6e8 !important;
-        }
-
-        .search-head h3 {
-          font-family: 'Inter', sans-serif !important;
-          font-weight: 700 !important;
-        }
-
-        .search-submit {
-          font-family: 'Inter', sans-serif !important;
-          font-weight: 800 !important;
-          letter-spacing: -0.01em !important;
-        }
-
-        .secure-note { display: none !important; }
+        .proof .head{margin-bottom:30px}
+        .proof-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+        .testimonial-card{position:relative;min-height:250px;padding:24px;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.015));display:flex;flex-direction:column;transition:transform .2s ease,border-color .2s ease}
+        .testimonial-card:hover{transform:translateY(-3px);border-color:rgba(255,210,26,.24)}
+        .testimonial-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+        .testimonial-stars{color:#ffd21a;letter-spacing:2px;font-size:14px}
+        .testimonial-type{font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#8f9096}
+        .testimonial-quote{margin:0 0 26px!important;color:#ececef!important;font-size:14px!important;line-height:1.7!important;flex:1}
+        .testimonial-person{display:flex;align-items:center;gap:11px;padding-top:17px;border-top:1px solid rgba(255,255,255,.07)}
+        .testimonial-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,210,26,.10);border:1px solid rgba(255,210,26,.18);color:#ffd21a;font-weight:800;font-size:12px}
+        .testimonial-name{font-size:12px;font-weight:800;color:#fff}
+        .testimonial-meta{margin-top:2px;font-size:10.5px;color:#85868c}
+        .demo-note{display:flex;align-items:center;gap:8px;margin-top:18px;color:#777981;font-size:10.5px;line-height:1.5}
+        .demo-dot{width:6px;height:6px;border-radius:50%;background:#ffd21a;flex:0 0 auto}
+        .map{padding:0!important;overflow:hidden!important;position:relative!important}
+        .map:before,.map:after{display:none!important}
+        .map iframe{width:100%;height:100%;min-height:360px;border:0;display:block;filter:grayscale(.38) contrast(1.05) brightness(.8)}
+        .map-route{position:absolute;left:18px;bottom:18px;z-index:3;min-height:42px;padding:0 15px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;background:#ffd21a;color:#111214;text-decoration:none;font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.28)}
+        .contact a.inline-link{color:#f5f5f3;text-decoration:none;font-weight:700}
+        .contact a.inline-link:hover{color:#ffd21a}
+        .wa-float{position:fixed;right:22px;bottom:22px;z-index:9999;min-height:52px;padding:0 18px;border-radius:999px;display:flex;align-items:center;gap:9px;background:#ffd21a;color:#111214;text-decoration:none;font-size:12px;font-weight:900;letter-spacing:-.01em;border:1px solid rgba(0,0,0,.18);box-shadow:0 16px 40px rgba(0,0,0,.34)}
+        .wa-float:hover{transform:translateY(-2px)}
+        .wa-float span{font-size:18px;line-height:1}
+        @media(max-width:980px){.proof-grid{grid-template-columns:1fr!important}}
+        @media(max-width:640px){.wa-float{right:14px;bottom:14px;min-height:48px;padding:0 14px}.map iframe{min-height:320px}.map-route{left:14px;bottom:14px}}
       `;
       doc.head.appendChild(style);
 
-      const eyebrow = doc.querySelector('.eyebrow');
-      if (eyebrow) eyebrow.innerHTML = 'ATENDIMENTO NA LOJA <span class="dot">|</span> ENTREGA RÁPIDA <span class="dot">|</span> INSTALAÇÃO';
-
-      const title = doc.querySelector('h1');
-      if (title) title.innerHTML = 'Precisou de bateria?<span class="line2">A gente resolve.</span>';
-
-      const subhead = doc.querySelector('.subhead span');
-      if (subhead) subhead.textContent = 'NA LOJA OU ONDE VOCÊ ESTIVER.';
-
-      const desc = doc.querySelector('.hero-desc');
-      if (desc) desc.textContent = 'Baterias de confiança, instalação profissional e garantia para manter você em movimento.';
-
-      const searchTitle = doc.querySelector('.search-head h3');
-      if (searchTitle) searchTitle.textContent = 'Encontre a bateria certa para o seu veículo';
-
-      const searchText = doc.querySelector('.search-head p');
-      if (searchText) searchText.textContent = 'Selecione seu veículo e veja as opções compatíveis.';
-
-      const searchButton = doc.querySelector('.search-submit');
-      if (searchButton) {
-        const textNode = [...searchButton.childNodes].find(node => node.nodeType === 3 && node.textContent.trim());
-        if (textNode) textNode.textContent = ' ENCONTRAR MINHA BATERIA ';
+      const proof = doc.querySelector('#avaliacoes');
+      if (proof) {
+        proof.innerHTML = `
+          <div class="container">
+            <div class="kicker">Quem compra, recomenda</div>
+            <div class="head">
+              <h2>Atendimento que resolve sem complicação.</h2>
+              <p>Rapidez, orientação para escolher a bateria certa e atendimento do começo ao fim.</p>
+            </div>
+            <div class="proof-grid">
+              <article class="testimonial-card">
+                <div class="testimonial-top"><div class="testimonial-stars">★★★★★</div><div class="testimonial-type">Atendimento no local</div></div>
+                <p class="testimonial-quote">“Meu carro não ligou de manhã e eu precisava sair. Expliquei o modelo, me orientaram sobre a bateria e resolveram tudo bem rápido.”</p>
+                <div class="testimonial-person"><div class="testimonial-avatar">CM</div><div><div class="testimonial-name">Carlos M.</div><div class="testimonial-meta">Cliente • exemplo de demonstração</div></div></div>
+              </article>
+              <article class="testimonial-card">
+                <div class="testimonial-top"><div class="testimonial-stars">★★★★★</div><div class="testimonial-type">Orientação</div></div>
+                <p class="testimonial-quote">“Eu não sabia qual bateria servia no meu carro. O atendimento explicou as opções com clareza e ficou bem mais fácil decidir.”</p>
+                <div class="testimonial-person"><div class="testimonial-avatar">JR</div><div><div class="testimonial-name">Juliana R.</div><div class="testimonial-meta">Cliente • exemplo de demonstração</div></div></div>
+              </article>
+              <article class="testimonial-card">
+                <div class="testimonial-top"><div class="testimonial-stars">★★★★★</div><div class="testimonial-type">Loja física</div></div>
+                <p class="testimonial-quote">“Fui até a loja, fui atendido rápido e já saí com a bateria instalada. Atendimento simples, direto e profissional.”</p>
+                <div class="testimonial-person"><div class="testimonial-avatar">RS</div><div><div class="testimonial-name">Rafael S.</div><div class="testimonial-meta">Cliente • exemplo de demonstração</div></div></div>
+              </article>
+            </div>
+            <div class="demo-note"><span class="demo-dot"></span>Depoimentos ilustrativos usados somente para demonstrar o layout. Substituir por avaliações reais antes da versão final.</div>
+          </div>`;
       }
 
-      [...doc.querySelectorAll('nav a')].forEach(link => {
-        const text = link.textContent.trim().toLowerCase();
-        if (text.includes('bateria')) {
-          link.href = '#';
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            window.parent.document.getElementById('catalogo')?.scrollIntoView({behavior:'smooth'});
-          });
-        }
-        if (text.includes('servi')) {
-          link.href = '#';
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            window.parent.document.getElementById('servicos')?.scrollIntoView({behavior:'smooth'});
-          });
+      doc.querySelectorAll('.product-card').forEach(card => {
+        const name = card.querySelector('h3')?.textContent.trim() || 'uma bateria';
+        const primary = card.querySelector('.actions .primary');
+        if (primary) {
+          primary.href = waUrl(`Olá! Vi a ${name} no site da Luan Baterias e quero confirmar compatibilidade, disponibilidade e condições.`);
+          primary.target = '_blank';
+          primary.rel = 'noopener';
+          primary.textContent = 'Consultar no WhatsApp';
         }
       });
-    });
 
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.product-card');
+      const contact = doc.querySelector('#contato .contact');
+      if (contact) {
+        contact.innerHTML = `
+          <h3>Luan Baterias</h3>
+          <p>Atendimento na loja em Santa Cruz — RJ e entrega conforme disponibilidade. Fale com a equipe para confirmar a bateria certa para o seu veículo.</p>
+          <div class="contact-list">
+            <div class="row"><div>📍</div><div><b>Endereço</b><span>${ADDRESS}</span></div></div>
+            <div class="row"><div>💬</div><div><b>WhatsApp</b><span><a class="inline-link" href="${waUrl('Olá! Vim pelo site da Luan Baterias e preciso de ajuda para encontrar uma bateria.')}" target="_blank" rel="noopener">(21) 97744-9687</a></span></div></div>
+            <div class="row"><div>☎</div><div><b>Telefone</b><span><a class="inline-link" href="tel:${PHONE_NUMBER}">(21) 3305-2797</a></span></div></div>
+          </div>
+          <a class="btn primary" href="${waUrl('Olá! Vim pelo site da Luan Baterias e preciso de ajuda para encontrar a bateria certa para meu veículo.')}" target="_blank" rel="noopener">Falar no WhatsApp</a>`;
+      }
 
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(item => item.classList.remove('active'));
-        button.classList.add('active');
-        const filter = button.dataset.filter;
+      const map = doc.querySelector('#contato .map');
+      if (map) {
+        const embed = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&output=embed`;
+        const route = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`;
+        map.innerHTML = `<iframe src="${embed}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa da Luan Baterias"></iframe><a class="map-route" href="${route}" target="_blank" rel="noopener">Abrir rota</a>`;
+      }
 
-        cards.forEach(card => {
-          const categories = card.dataset.category.split(' ');
-          card.hidden = filter !== 'todos' && !categories.includes(filter);
+      doc.querySelectorAll('.footer a').forEach(link => {
+        if (link.textContent.toLowerCase().includes('cabr')) {
+          link.textContent = 'Rua do Império, 166 - Santa Cruz - RJ';
+          link.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`;
+          link.target = '_blank';
+          link.rel = 'noopener';
+        }
+      });
+
+      const finalCta = doc.querySelector('.cta .primary');
+      if (finalCta) {
+        finalCta.textContent = 'Falar com a Luan Baterias';
+        finalCta.href = waUrl('Olá! Vim pelo site da Luan Baterias e quero encontrar a bateria certa para meu veículo.');
+        finalCta.target = '_blank';
+        finalCta.rel = 'noopener';
+      }
+
+      if (!doc.querySelector('.wa-float')) {
+        const float = doc.createElement('a');
+        float.className = 'wa-float';
+        float.href = waUrl('Olá! Vim pelo site da Luan Baterias e preciso de atendimento.');
+        float.target = '_blank';
+        float.rel = 'noopener';
+        float.setAttribute('aria-label', 'Falar com a Luan Baterias pelo WhatsApp');
+        float.innerHTML = '<span>💬</span> WhatsApp';
+        doc.body.appendChild(float);
+      }
+
+      const heroFrame = doc.getElementById('site');
+      const configureHero = () => {
+        const heroDoc = heroFrame?.contentDocument || heroFrame?.contentWindow?.document;
+        if (!heroDoc) return;
+
+        [...heroDoc.querySelectorAll('a,button')].forEach(el => {
+          if (el.textContent.trim().toLowerCase().includes('whatsapp')) {
+            if (el.tagName === 'A') {
+              el.href = waUrl('Olá! Vim pelo site da Luan Baterias e preciso de atendimento.');
+              el.target = '_blank';
+              el.rel = 'noopener';
+            } else {
+              el.onclick = () => window.open(waUrl('Olá! Vim pelo site da Luan Baterias e preciso de atendimento.'), '_blank');
+            }
+          }
         });
-      });
+
+        const searchButton = heroDoc.querySelector('.search-submit');
+        if (searchButton && !searchButton.dataset.waConnected) {
+          searchButton.dataset.waConnected = 'true';
+          searchButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const labels = ['Marca', 'Modelo', 'Ano', 'Motorização'];
+            const selects = [...heroDoc.querySelectorAll('.field select')];
+            const parts = selects.map((select, index) => {
+              const value = select.selectedOptions?.[0]?.textContent?.trim() || '';
+              if (!value || /selecione|escolha/i.test(value)) return null;
+              return `${labels[index] || `Campo ${index + 1}`}: ${value}`;
+            }).filter(Boolean);
+            const vehicle = parts.length ? parts.join(' | ') : 'Ainda não preenchi todos os dados do veículo';
+            const message = `Olá! Vim pelo site da Luan Baterias e quero encontrar a bateria certa. ${vehicle}.`;
+            window.open(waUrl(message), '_blank');
+          }, true);
+        }
+      };
+
+      if (heroFrame) {
+        heroFrame.addEventListener('load', configureHero);
+        try { configureHero(); } catch (_) {}
+      }
+
+      const resizePage = () => {
+        const height = Math.max(doc.body?.scrollHeight || 0, doc.documentElement?.scrollHeight || 0, 840);
+        page.style.height = `${height}px`;
+      };
+      resizePage();
+      setTimeout(resizePage, 300);
+      setTimeout(resizePage, 1200);
+      if ('ResizeObserver' in window) {
+        const observer = new ResizeObserver(resizePage);
+        observer.observe(doc.documentElement);
+      }
     });
   </script>
 </body>
