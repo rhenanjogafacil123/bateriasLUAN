@@ -1,0 +1,46 @@
+name: Patch mixed diagnosis
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-mixed-diagnosis.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update mixed diagnosis
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          s = s.replace(".diag-result p{margin:0;color:#4e4e49;font-size:15px;line-height:1.65}", ".diag-result p{margin:0;color:#4e4e49;font-size:15px;line-height:1.65}#resultText{white-space:pre-line}")
+
+          old = "mixed:{title:'Vale fazer um teste elétrico antes de trocar',text:'Você marcou sinais que podem apontar para mais de uma causa. O melhor próximo passo é testar bateria, sistema de carga e conexões antes de decidir pela troca.'}"
+          new = "mixed:{title:'Os sintomas podem ter mais de uma causa',text:'Os sinais marcados apontam para mais de uma possibilidade. Veja abaixo as causas mais compatíveis com os sintomas antes de decidir pela troca.'}"
+          if old in s:
+              s = s.replace(old, new)
+
+          old_fn = "function getDiagnosis(){const selected=[...document.querySelectorAll('.symptom.active')].map(b=>b.dataset.symptom);const scores={battery:0,alternator:0,starter:0,connection:0,other:0};selected.forEach(id=>{Object.entries(symptomData[id].scores).forEach(([k,v])=>scores[k]+=v)});const ranked=Object.entries(scores).sort((a,b)=>b[1]-a[1]);let key=ranked[0][0];if(selected.length>=3 && ranked[1][1]>0 && ranked[0][1]-ranked[1][1]<=1)key='mixed';const outcome=outcomes[key];document.getElementById('resultTitle').textContent=outcome.title;document.getElementById('resultText').textContent=outcome.text;const symptomLines=selected.map(id=>`• ${symptomData[id].label}`).join('\\n');const message=`Olá, equipe da Luan Baterias! 👋\\n\\nFiz o DIAGNÓSTICO RÁPIDO pelo site e preciso de ajuda.\\n\\n🚗 SINTOMAS QUE MARQUEI\\n${symptomLines}\\n\\n🔎 ORIENTAÇÃO DO SITE\\n${outcome.title}\\n\\n✅ O QUE EU PRECISO\\nQuero confirmar a causa do problema e saber se vocês conseguem fazer o teste/atendimento.\\n\\nPosso enviar o modelo do carro e minha localização na conversa.`;document.getElementById('resultWa').href=wa(message);result.classList.add('active');result.scrollIntoView({behavior:'smooth',block:'center'})}"
+
+          new_fn = "function getDiagnosis(){const selected=[...document.querySelectorAll('.symptom.active')].map(b=>b.dataset.symptom);const scores={battery:0,alternator:0,starter:0,connection:0,other:0};selected.forEach(id=>{Object.entries(symptomData[id].scores).forEach(([k,v])=>scores[k]+=v)});const ranked=Object.entries(scores).sort((a,b)=>b[1]-a[1]);let key=ranked[0][0];if(selected.length>=3 && ranked[1][1]>0 && ranked[0][1]-ranked[1][1]<=1)key='mixed';const outcome=outcomes[key];const causeNames={battery:'Bateria descarregada ou enfraquecida',alternator:'Alternador ou sistema de carga',starter:'Motor de partida, relé ou circuito de partida',connection:'Terminais, cabos ou mau contato elétrico',other:'Outra falha elétrica ou mecânica fora da bateria'};const possibleCauses=ranked.filter(([_,score])=>score>0).slice(0,3).map(([cause])=>causeNames[cause]);const possibleCauseLines=possibleCauses.map(c=>`• ${c}`).join('\\n');document.getElementById('resultTitle').textContent=outcome.title;document.getElementById('resultText').textContent=key==='mixed'?`${outcome.text}\\n\\nPossíveis causas:\\n${possibleCauseLines}`:outcome.text;const symptomLines=selected.map(id=>`• ${symptomData[id].label}`).join('\\n');const mixedBlock=key==='mixed'?`\\n\\n⚠️ POSSÍVEIS CAUSAS\\n${possibleCauseLines}`:'';const message=`Olá, equipe da Luan Baterias! 👋\\n\\nFiz o DIAGNÓSTICO RÁPIDO pelo site e preciso de ajuda.\\n\\n🚗 SINTOMAS QUE MARQUEI\\n${symptomLines}\\n\\n🔎 ORIENTAÇÃO DO SITE\\n${outcome.title}${mixedBlock}\\n\\n✅ O QUE EU PRECISO\\nQuero confirmar a causa do problema e saber se vocês conseguem fazer o teste/atendimento.\\n\\nPosso enviar o modelo do carro e minha localização na conversa.`;document.getElementById('resultWa').href=wa(message);result.classList.add('active');result.scrollIntoView({behavior:'smooth',block:'center'})}"
+
+          if old_fn not in s:
+              raise SystemExit('Target getDiagnosis function not found; aborting safely.')
+          s = s.replace(old_fn, new_fn)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit update
+        run: |
+          git config user.name "Luan Site Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "List possible causes in mixed diagnosis [skip ci]"
+          git push
